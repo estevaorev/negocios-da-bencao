@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Negócios da Benção - Fé e Empreendedorismo</title>
+    
+    <!-- Chosen Palette: Paleta Serenidade e Propósito -->
+    <!-- Application Structure Plan: A estrutura é uma single-page application (SPA) linear, projetada para contar uma história convincente. Começa com uma visão inspiradora (Seção Inicial), aprofunda os fundamentos (Nossa Essência), explica a mecânica (Como Funciona), oferece ferramentas práticas (Ferramentas da Benção) e termina com um claro chamado à ação (Junte-se a Nós). Este fluxo é o mais eficaz para construir confiança e converter o interesse de potenciais membros, guiando o usuário de forma lógica do "porquê" ao "como" e ao "próximo passo". -->
+    <!-- Visualization & Content Choices: A seção 'Nossa Essência' usa um grid de 3 colunas para permitir a comparação direta. A seção 'Como Funciona' usa um grid de 4 colunas com ícones para máxima escaneabilidade. A nova seção 'Ferramentas da Benção' usa um grid de 2 colunas com cards interativos, cada um contendo um input, um botão para chamar a API Gemini e uma área de resultados, oferecendo valor prático e direto. Todas as escolhas foram feitas para maximizar a clareza e a usabilidade. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #FDFBF8; /* Warm neutral background */
+            color: #3D405B; /* Deep, trustworthy text color */
+        }
+        .accent-bg { background-color: #8D8741; } /* Muted gold/olive accent */
+        .accent-text { color: #8D8741; }
+        .accent-border { border-color: #8D8741; }
+        .secondary-bg { background-color: #E0E0E0; }
+        .highlight-bg { background-color: #F2EAD3; } /* Lighter accent for backgrounds */
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('fundoSite.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .nav-link {
+            transition: color 0.3s ease;
+        }
+        .nav-link:hover {
+            color: #8D8741;
+        }
+        .cta-button {
+            transition: all 0.3s ease;
+        }
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .card {
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(61, 64, 91, 0.1);
+        }
+        .gemini-result {
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            border-left: 4px solid #8D8741;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header id="header" class="bg-white/80 backdrop-blur-md fixed top-0 left-0 right-0 z-50 shadow-sm">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#inicio" class="text-xl font-bold accent-text">Negócios da Benção</a>
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#inicio" class="nav-link font-medium">Início</a>
+                <a href="#nossa-essencia" class="nav-link font-medium">Nosso Propósito</a>
+                <a href="#como-funciona" class="nav-link font-medium">Como Funciona</a>
+                <a href="#ferramentas" class="nav-link font-medium">Ferramentas</a>
+                <a href="#junte-se" class="cta-button bg-white border-2 accent-border accent-text px-4 py-2 rounded-full font-bold text-sm">Junte-se a Nós</a>
+            </nav>
+            <button id="mobile-menu-button" class="md:hidden text-3xl accent-text">
+                &#9776;
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#inicio" class="block text-center py-3 px-4 text-lg font-medium nav-link">Início</a>
+            <a href="#nossa-essencia" class="block text-center py-3 px-4 text-lg font-medium nav-link">Nosso Propósito</a>
+            <a href="#como-funciona" class="block text-center py-3 px-4 text-lg font-medium nav-link">Como Funciona</a>
+            <a href="#ferramentas" class="block text-center py-3 px-4 text-lg font-medium nav-link">Ferramentas</a>
+            <a href="#junte-se" class="block text-center py-4 px-4 text-lg accent-bg text-white font-bold">Junte-se a Nós</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- SEÇÃO INICIAL -->
+        <section id="inicio" class="hero-section h-screen flex items-center justify-center text-white text-center pt-16">
+            <div class="container mx-auto px-6">
+                <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-4">Negócios da Benção</h1>
+                <p class="text-lg md:text-2xl font-light mb-6 max-w-3xl mx-auto">Fé e Empreendedorismo: Fortalecendo uns aos outros em sabedoria, integridade e propósito para a Glória de Deus.</p>
+                <p class="text-md md:text-xl italic mb-8">"É melhor ter companhia do que estar sozinho... Um cordão de três dobras não se rompe com facilidade." - Eclesiastes 4:9-12</p>
+                <a href="#nossa-essencia" class="cta-button accent-bg text-white px-8 py-4 rounded-full font-bold text-lg inline-block">Saiba Mais</a>
+            </div>
+        </section>
+
+        <!-- SEÇÃO "NOSSA ESSÊNCIA" -->
+        <section id="nossa-essencia" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4">O Poder de Caminhar Juntos</h2>
+                    <p class="max-w-3xl mx-auto text-lg text-gray-600">O grupo Negócios da Benção nasceu de um propósito claro: criar um ecossistema onde empreendedores cristãos não caminham sozinhos. Acreditamos que, através da sabedoria coletiva, do apoio mútuo e de princípios bíblicos, podemos construir negócios mais fortes, resilientes e que honram a Deus em cada detalhe.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                    <div class="card bg-white p-8 rounded-xl shadow-lg text-center">
+                        <div class="text-5xl mb-4">🔭</div>
+                        <h3 class="text-2xl font-bold mb-3 accent-text">Nossa Visão</h3>
+                        <p class="text-gray-600">Construir um ecossistema onde cada empreendedor membro se torna mais próspero, resiliente e confiante em seu propósito, refletindo a bênção e a sabedoria de Deus.</p>
+                    </div>
+                    <div class="card bg-white p-8 rounded-xl shadow-lg text-center">
+                        <div class="text-5xl mb-4">🎯</div>
+                        <h3 class="text-2xl font-bold mb-3 accent-text">Nossa Missão</h3>
+                        <p class="text-gray-600">Promover o crescimento conjunto através do apoio mútuo, compartilhamento estratégico de recursos, sabedoria coletiva e responsabilidade, garantindo que nenhum membro caminhe sozinho.</p>
+                    </div>
+                    <div class="card bg-white p-8 rounded-xl shadow-lg text-center">
+                        <div class="text-5xl mb-4">🧭</div>
+                        <h3 class="text-2xl font-bold mb-3 accent-text">Nossos Valores</h3>
+                        <ul class="text-gray-600 space-y-2">
+                            <li><strong>Compromisso:</strong> "O ferro afia o ferro."</li>
+                            <li><strong>Confidencialidade:</strong> Um porto seguro.</li>
+                            <li><strong>Sabedoria Coletiva:</strong> "Na multidão de conselheiros há segurança."</li>
+                            <li><strong>Fé Ativa:</strong> "Confie no Senhor."</li>
+                            <li><strong>Mutualidade:</strong> "Levem os fardos uns dos outros."</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO "COMO FUNCIONA" -->
+        <section id="como-funciona" class="py-20 md:py-32 highlight-bg">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4">Nossa Dinâmica: Compromisso e Crescimento</h2>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="text-center p-6">
+                        <div class="text-6xl mb-4">🤝</div>
+                        <h3 class="text-xl font-bold mb-2">Reuniões Mensais</h3>
+                        <p class="text-gray-600">Encontros focados em crescimento espiritual e estratégico, onde compartilhamos vitórias, desafios e aprendizados.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="text-6xl mb-4">💡</div>
+                        <h3 class="text-xl font-bold mb-2">Cadeira da Sabedoria</h3>
+                        <p class="text-gray-600">Uma metodologia onde um membro apresenta um desafio e recebe a sabedoria coletiva e o conselho prático do grupo.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="text-6xl mb-4">🔒</div>
+                        <h3 class="text-xl font-bold mb-2">Ambiente de Confiança</h3>
+                        <p class="text-gray-600">A confidencialidade é a base do nosso grupo. Criamos um ambiente seguro para sermos vulneráveis e honestos.</p>
+                    </div>
+                    <div class="text-center p-6">
+                        <div class="text-6xl mb-4">🌱</div>
+                        <h3 class="text-xl font-bold mb-2">Capacitação Contínua</h3>
+                        <p class="text-gray-600">Buscamos crescer proativamente através de estudos e discussões sobre temas relevantes à luz da Bíblia.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NOVA SEÇÃO "FERRAMENTAS DA BENÇÃO" -->
+        <section id="ferramentas" class="py-20 md:py-32">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4">Ferramentas da Benção</h2>
+                    <p class="max-w-3xl mx-auto text-lg text-gray-600">Recursos práticos, potencializados por inteligência artificial, para ajudar no seu dia a dia como empreendedor de fé.</p>
+                </div>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Ferramenta 1: Gerador de Ideias para Posts -->
+                    <div class="card bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-3 accent-text">✨ Gerador de Ideias para Posts</h3>
+                        <p class="text-gray-600 mb-4">Sem inspiração para as redes sociais? Descreva o seu negócio e receba ideias de posts que conectam e servem.</p>
+                        <input type="text" id="post-idea-input" placeholder="Ex: padaria artesanal, consultoria financeira" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border mb-4">
+                        <button id="post-idea-button" class="cta-button w-full accent-bg text-white p-3 rounded-lg font-bold">Gerar Ideias</button>
+                        <div id="post-idea-loading" class="hidden text-center mt-4">A gerar...</div>
+                        <div id="post-idea-result" class="hidden gemini-result"></div>
+                    </div>
+                    <!-- Ferramenta 2: Oração do Empreendedor -->
+                    <div class="card bg-white p-8 rounded-xl shadow-lg">
+                        <h3 class="text-2xl font-bold mb-3 accent-text">✨ Oração do Empreendedor</h3>
+                        <p class="text-gray-600 mb-4">Entregue seus desafios e metas a Deus. Escreva o seu principal foco para a semana e receba uma oração personalizada.</p>
+                        <input type="text" id="prayer-input" placeholder="Ex: fechar um novo contrato, ter sabedoria" class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border mb-4">
+                        <button id="prayer-button" class="cta-button w-full accent-bg text-white p-3 rounded-lg font-bold">Gerar Oração</button>
+                        <div id="prayer-loading" class="hidden text-center mt-4">A gerar...</div>
+                        <div id="prayer-result" class="hidden gemini-result"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SEÇÃO "JUNTE-SE A NÓS" -->
+        <section id="junte-se" class="py-20 md:py-32 highlight-bg">
+            <div class="container mx-auto px-6">
+                <div class="max-w-3xl mx-auto text-center">
+                    <h2 class="text-4xl font-bold mb-4">Você está pronto para esta jornada?</h2>
+                    <p class="text-lg text-gray-600 mb-10">Buscamos empreendedores da nossa comunidade de fé que estejam comprometidos não apenas com o sucesso de seus negócios, mas com um crescimento fundamentado em valores eternos. Se você deseja fazer parte de um grupo sério, baseado em compromisso, confidencialidade e ajuda mútua, queremos ouvir de você.</p>
+                    
+                    <div id="form-container" class="bg-white p-8 rounded-xl shadow-2xl">
+                        <form id="contact-form">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <input type="text" id="name" placeholder="Nome Completo" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
+                                <input type="email" id="email" placeholder="E-mail" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                <input type="tel" id="phone" placeholder="Telefone (WhatsApp)" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
+                                <input type="text" id="business" placeholder="Nome e Ramo do seu Negócio" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
+                            </div>
+                            <button type="submit" class="cta-button w-full accent-bg text-white p-4 rounded-lg font-bold text-lg">Tenho Interesse em Fazer Parte</button>
+                        </form>
+                        <div id="success-message" class="hidden text-center">
+                            <h3 class="text-2xl font-bold accent-text mb-4">Obrigado!</h3>
+                            <p class="text-lg text-gray-700">Recebemos seu interesse. Entraremos em contato em breve para os próximos passos. Que Deus abençoe sua jornada!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- RODAPÉ -->
+    <footer class="bg-gray-800 text-white py-10">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-lg font-bold mb-2">Negócios da Benção</p>
+            <p class="mb-1">contato@negociosdabencao.com.br</p>
+            <p class="mb-4">Nome da Igreja / Cidade</p>
+            <p class="text-sm text-gray-400">&copy; 2024 | Negócios da Benção | Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const navLinks = document.querySelectorAll('#mobile-menu a, header nav a');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                    if (link.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const headerOffset = document.getElementById('header').offsetHeight;
+                            const elementPosition = targetElement.getBoundingClientRect().top;
+                            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                            window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+                        }
+                    }
+                });
+            });
+
+            const contactForm = document.getElementById('contact-form');
+            const successMessage = document.getElementById('success-message');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                contactForm.classList.add('hidden');
+                successMessage.classList.remove('hidden');
+            });
+
+            // Gemini API Integration
+            const apiKey = ""; 
+
+            async function callGeminiAPI(prompt, resultElement, loadingElement, buttonElement) {
+                loadingElement.classList.remove('hidden');
+                resultElement.classList.add('hidden');
+                buttonElement.disabled = true;
+
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Erro na API: ${response.statusText}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts.length > 0) {
+                        const text = result.candidates[0].content.parts[0].text;
+                        resultElement.innerText = text;
+                    } else {
+                        throw new Error("Resposta da API inválida.");
+                    }
+                    
+                } catch (error) {
+                    console.error("Erro ao chamar a API Gemini:", error);
+                    resultElement.innerText = "Ocorreu um erro ao gerar a resposta. Por favor, tente novamente mais tarde.";
+                } finally {
+                    loadingElement.classList.add('hidden');
+                    resultElement.classList.remove('hidden');
+                    buttonElement.disabled = false;
+                }
+            }
+
+            // Event Listener para Gerador de Ideias
+            const postIdeaButton = document.getElementById('post-idea-button');
+            const postIdeaInput = document.getElementById('post-idea-input');
+            const postIdeaResult = document.getElementById('post-idea-result');
+            const postIdeaLoading = document.getElementById('post-idea-loading');
+
+            postIdeaButton.addEventListener('click', () => {
+                const businessType = postIdeaInput.value;
+                if (businessType.trim() === "") {
+                    alert("Por favor, descreva o seu negócio.");
+                    return;
+                }
+                const prompt = `Aja como um especialista em marketing de redes sociais para um público cristão. Gere 3 ideias de posts para uma empresa de "${businessType}". Os posts devem ser práticos, inspiradores e refletir valores de integridade, serviço e excelência. Formate a resposta como uma lista numerada com títulos e uma breve descrição para cada ideia.`;
+                callGeminiAPI(prompt, postIdeaResult, postIdeaLoading, postIdeaButton);
+            });
+
+            // Event Listener para Oração do Empreendedor
+            const prayerButton = document.getElementById('prayer-button');
+            const prayerInput = document.getElementById('prayer-input');
+            const prayerResult = document.getElementById('prayer-result');
+            const prayerLoading = document.getElementById('prayer-loading');
+
+            prayerButton.addEventListener('click', () => {
+                const challenge = prayerInput.value;
+                if (challenge.trim() === "") {
+                    alert("Por favor, descreva o seu desafio ou objetivo.");
+                    return;
+                }
+                const prompt = `Escreva uma oração curta e sincera (cerca de 4-5 frases) para um empreendedor que está a enfrentar o seguinte desafio ou a buscar o seguinte objetivo: "${challenge}". A oração deve pedir a Deus por sabedoria, direção e paz, terminando com uma nota de confiança na Sua soberania.`;
+                callGeminiAPI(prompt, prayerResult, prayerLoading, prayerButton);
+            });
+        });
+    </script>
+
+</body>
+</html>
