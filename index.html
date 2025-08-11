@@ -268,26 +268,24 @@
                 successMessage.classList.remove('hidden');
             });
 
-            // Gemini API Integration
-            const apiKey = ""; 
-
             async function callGeminiAPI(prompt, resultElement, loadingElement, buttonElement) {
                 loadingElement.classList.remove('hidden');
                 resultElement.classList.add('hidden');
                 buttonElement.disabled = true;
 
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                // O URL agora aponta para a nossa função segura no Netlify
+                const apiUrl = `/.netlify/functions/gemini-proxy`;
 
                 try {
+                    // Enviamos o prompt para a nossa função
                     const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
+                        body: JSON.stringify({ prompt: prompt }) // Enviamos o prompt no corpo do pedido
                     });
 
                     if (!response.ok) {
-                        throw new Error(`Erro na API: ${response.statusText}`);
+                        throw new Error(`Erro na chamada da função: ${response.statusText}`);
                     }
 
                     const result = await response.json();
@@ -296,11 +294,13 @@
                         const text = result.candidates[0].content.parts[0].text;
                         resultElement.innerText = text;
                     } else {
-                        throw new Error("Resposta da API inválida.");
+                        // Se a API da Google devolver um erro, ele pode estar aqui
+                        console.error("Resposta da API inválida:", result);
+                        throw new Error("Resposta da API inválida ou bloqueada.");
                     }
                     
                 } catch (error) {
-                    console.error("Erro ao chamar a API Gemini:", error);
+                    console.error("Erro ao chamar a função:", error);
                     resultElement.innerText = "Ocorreu um erro ao gerar a resposta. Por favor, tente novamente mais tarde.";
                 } finally {
                     loadingElement.classList.add('hidden');
@@ -308,6 +308,7 @@
                     buttonElement.disabled = false;
                 }
             }
+
 
             // Event Listener para Gerador de Ideias
             const postIdeaButton = document.getElementById('post-idea-button');
