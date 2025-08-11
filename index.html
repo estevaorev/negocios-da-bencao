@@ -336,7 +336,7 @@
                     alert("Por favor, descreva o seu negócio.");
                     return;
                 }
-                const prompt = `Aja como um especialista em marketing de redes sociais para um público cristão. Gere 3 ideias de posts para uma empresa de "${businessType}". Os posts devem ser práticos, inspiradores e refletir valores de integridade, serviço e excelência. Formate a resposta como uma lista numerada com títulos e uma breve descrição para cada ideia.`;
+                const prompt = `Aja como um especialista em marketing de redes sociais para um público cristão. Gere 3 ideias de posts para uma empresa de "${businessType}". Os posts devem ser práticos, inspiradores e refletir valores de integridade, serviço e excelência. Formate a resposta como uma lista numerada com títulos e uma breve descrição para cada ideia. Apenas exiba a oração entre aspas, sem inserir nenhuma introdução antes.`;
                 callGeminiAPI(prompt, postIdeaResult, postIdeaLoading, postIdeaButton);
             });
 
