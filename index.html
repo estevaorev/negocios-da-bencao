@@ -200,14 +200,15 @@
                     <p class="text-lg text-gray-600 mb-10">Buscamos empreendedores da nossa comunidade de fé que estejam comprometidos não apenas com o sucesso de seus negócios, mas com um crescimento fundamentado em valores eternos. Se você deseja fazer parte de um grupo sério, baseado em compromisso, confidencialidade e ajuda mútua, queremos ouvir de você.</p>
                     
                     <div id="form-container" class="bg-white p-8 rounded-xl shadow-2xl">
-                        <form id="contact-form">
+                        <form id="contact-form" name="adesao" method="POST" data-netlify="true">
+                            <input type="hidden" name="form-name" value="adesao" />
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <input type="text" id="name" placeholder="Nome Completo" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
-                                <input type="email" id="email" placeholder="E-mail" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
+                                <input type="text" id="name" name="name" placeholder="Nome Completo" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
+                                <input type="email" id="email" name="email" placeholder="E-mail" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                                <input type="tel" id="phone" placeholder="Telefone (WhatsApp)" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
-                                <input type="text" id="business" placeholder="Nome e Ramo do seu Negócio" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
+                                <input type="tel" id="phone" name="phone" placeholder="Telefone (WhatsApp)" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
+                                <input type="text" id="business" name="business" placeholder="Nome e Ramo do seu Negócio" required class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 accent-border">
                             </div>
                             <button type="submit" class="cta-button w-full accent-bg text-white p-4 rounded-lg font-bold text-lg">Tenho Interesse em Fazer Parte</button>
                         </form>
@@ -260,12 +261,25 @@
                 });
             });
 
+            // Netlify Form Submission
             const contactForm = document.getElementById('contact-form');
-            const successMessage = document.getElementById('success-message');
             contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
-                contactForm.classList.add('hidden');
-                successMessage.classList.remove('hidden');
+                
+                const formData = new FormData(contactForm);
+                fetch("/", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                    body: new URLSearchParams(formData).toString(),
+                })
+                .then(() => {
+                    const formWrapper = document.getElementById('form-container');
+                    formWrapper.innerHTML = `<div class="text-center">
+                            <h3 class="text-2xl font-bold accent-text mb-4">Obrigado!</h3>
+                            <p class="text-lg text-gray-700">Recebemos seu interesse. Entraremos em contato em breve para os próximos passos. Que Deus abençoe sua jornada!</p>
+                        </div>`;
+                })
+                .catch((error) => alert("Ocorreu um erro ao enviar o formulário."));
             });
 
             async function callGeminiAPI(prompt, resultElement, loadingElement, buttonElement) {
